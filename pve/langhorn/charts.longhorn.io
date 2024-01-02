@@ -1,15 +1,28 @@
 ---
-kind: StorageClass
-apiVersion: storage.k8s.io/v1
+apiVersion: v1
+kind: PersistentVolume
 metadata:
-  name: longhorn-fast
-provisioner: driver.longhorn.io
-allowVolumeExpansion: true
-reclaimPolicy: "Delete"
-volumeBindingMode: Immediate
-parameters:
-  numberOfReplicas: "3"
-  staleReplicaTimeout: "30"
-  fsType: "ext4"
-  diskSelector: "ssd"
-  nodeSelector: "ssd"
+  name: nfs
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 192.168.1.126
+    path: "/home/pi/nfs-share/k3s"
+  mountOptions:
+    - nfsvers=4.2
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ""
+  resources:
+    requests:
+      storage: 5Gi
+  volumeName: nfs
