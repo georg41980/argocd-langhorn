@@ -5,7 +5,7 @@ metadata:
   name: nfs
 spec:
   capacity:
-    storage: 5Gi
+    storage: 50Gi
   accessModes:
     - ReadWriteMany
   nfs:
@@ -24,7 +24,7 @@ spec:
   storageClassName: ""
   resources:
     requests:
-      storage: 5Gi
+      storage: 50Gi
   volumeName: nfs
 ---
 # This pod mounts the nfs volume claim into /usr/share/nginx/html and
